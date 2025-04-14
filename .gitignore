@@ -1,1 +1,5 @@
-env
+echo env/ > .gitignore
+echo *.sqlite3 >> .gitignore
+echo __pycache__/ >> .gitignore
+echo *.pyc >> .gitignore
+echo *.log >> .gitignore

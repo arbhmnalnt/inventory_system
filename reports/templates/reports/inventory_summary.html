@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Inventory Summary</h2>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Quantity</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <td>{{ item.name }}</td>
+      <td>{{ item.category }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.description }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

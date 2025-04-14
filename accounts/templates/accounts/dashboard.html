@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link 
+    rel="stylesheet" 
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  >
+</head>
+<body>
+<div class="container">
+  <h1 class="mt-5">Dashboard</h1>
+  <ul class="list-group mt-3">
+    <li class="list-group-item"><a href="/inventory/">Inventory Management</a></li>
+    <li class="list-group-item"><a href="/financial/">Financial Reports</a></li>
+    <li class="list-group-item"><a href="/customers/">Customer Details</a></li>
+  </ul>
+  <a href="{% url 'logout' %}" class="btn btn-secondary mt-3">Logout</a>
+</div>
+</body>
+</html>

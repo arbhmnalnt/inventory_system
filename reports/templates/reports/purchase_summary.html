@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Purchase Summary</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Purchase ID</th>
+      <th>Customer</th>
+      <th>Items</th>
+      <th>Total</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in purchases %}
+    <tr>
+      <td>#{{ p.id }}</td>
+      <td>{{ p.customer.name }}</td>
+      <td>
+        <ul class="list-unstyled mb-0">
+          {% for item in p.items.all %}
+          <li>{{ item.inventory_item.name }} × {{ item.quantity }} = {{ item.total_price }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+      <td>{{ p.total_price }}</td>
+      <td>{{ p.purchase_date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

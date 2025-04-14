@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+  <form method="get" class="form-inline mb-3">
+    <input type="text" name="q" value="{{ query }}" class="form-control mr-2" placeholder="Search name or category">
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="{% url 'inventory_item_list' %}" class="btn btn-secondary ml-2">Clear</a>
+  </form>
+  <h2>Inventory Items</h2>
+  <a href="{% url 'inventory_item_create' %}" class="btn btn-primary mb-2">Add New Item</a>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.description }}</td>
+        <td>
+          <a href="{% url 'inventory_item_update' item.pk %}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{% url 'inventory_item_delete' item.pk %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Financial Summary</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Date</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in records %}
+    <tr>
+      <td>{{ r.record_type }}</td>
+      <td>{{ r.amount }}</td>
+      <td>{{ r.date }}</td>
+      <td>{{ r.description }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h4 class="mt-4">Total Revenue: {{ total_revenue }}</h4>
+<h4>Total Expense: {{ total_expense }}</h4>
+<h3><strong>Balance: {{ balance }}</strong></h3>
+{% endblock %}

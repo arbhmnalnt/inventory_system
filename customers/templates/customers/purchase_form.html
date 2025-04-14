@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load form_extras %}
+
+{% block content %}
+<h2 class="mb-4">{% if update %}Edit{% else %}New{% endif %} Purchase {% if purchase %} #{{ purchase.id }}{% endif %}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="id_customer">Customer:</label>
+    {{ form.customer|add_class:"form-control" }}
+  </div>
+
+  <table class="table table-bordered" id="items-table">
+    <thead class="thead-light">
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ formset.management_form }}
+      {% for form in formset %}
+      <tr class="item-form-row">
+        <td>{{ form.inventory_item }}</td>
+        <td>{{ form.quantity }}</td>
+        <td>{{ form.unit_price }}</td>
+        <td class="item-total">0.00</td>
+        <td>
+          {% if form.instance.pk %}
+            {{ form.DELETE }}
+          {% else %}
+            <button type="button" class="btn btn-sm btn-danger remove-row">X</button>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="text-right mb-3">
+    <button type="button" class="btn btn-sm btn-outline-primary" id="add-row">+ Add Item</button>
+  </div>
+
+  <div class="alert alert-info">
+    <strong>Total: <span id="grand-total">0.00</span></strong>
+  </div>
+
+  <button type="submit" class="btn btn-success">Save Purchase</button>
+  <a href="{% url 'purchase_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+<script>
+function updateTotals() {
+  let grand = 0;
+  document.querySelectorAll('.item-form-row').forEach(row => {
+    const qty = row.querySelector('input[name$=quantity]').value || 0;
+    const price = row.querySelector('input[name$=unit_price]').value || 0;
+    const total = (qty * price).toFixed(2);
+    row.querySelector('.item-total').innerText = total;
+    grand += parseFloat(total);
+  });
+  document.getElementById('grand-total').innerText = grand.toFixed(2);
+}
+
+document.addEventListener('input', e => {
+  if (e.target.matches('input[name$=quantity], input[name$=unit_price]')) {
+    updateTotals();
+  }
+});
+
+// Add new row
+document.getElementById('add-row').addEventListener('click', function () {
+  let table = document.querySelector('#items-table tbody');
+  let formIdx = document.querySelectorAll('.item-form-row').length;
+  let newRow = table.querySelector('tr').cloneNode(true);
+  newRow.querySelectorAll('input, select').forEach(input => {
+    input.name = input.name.replace(/\d+/, formIdx);
+    input.id = input.id.replace(/\d+/, formIdx);
+    input.value = '';
+  });
+  newRow.querySelector('.item-total').innerText = '0.00';
+  table.appendChild(newRow);
+
+  document.getElementById('id_form-TOTAL_FORMS').value = formIdx + 1;
+  updateTotals();
+});
+
+// Remove row
+document.addEventListener('click', function (e) {
+  if (e.target.classList.contains('remove-row')) {
+    e.target.closest('tr').remove();
+    updateTotals();
+  }
+});
+
+updateTotals();
+</script>
+<script>
+  document.querySelectorAll('select[name$=inventory_item]').forEach(select => {
+    select.addEventListener('change', function () {
+      const row = this.closest('tr');
+      const itemId = this.value;
+      fetch(`/customers/ajax/get-item-price/?item_id=${itemId}`)
+        .then(res => res.json())
+        .then(data => {
+          const unitInput = row.querySelector('input[name$=unit_price]');
+          unitInput.value = data.price;
+          unitInput.dispatchEvent(new Event('input')); // trigger total update
+        });
+    });
+  });
+  </script>
+  
+{% endblock %}

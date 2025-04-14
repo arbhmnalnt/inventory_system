@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>📊 Reports Dashboard</h2>
+<ul class="list-group">
+  <li class="list-group-item"><a href="{% url 'inventory_summary' %}">Inventory Summary</a></li>
+  <li class="list-group-item"><a href="{% url 'purchase_summary' %}">Purchase Summary</a></li>
+  <li class="list-group-item"><a href="{% url 'financial_summary' %}">Financial Summary</a></li>
+</ul>
+{% endblock %}

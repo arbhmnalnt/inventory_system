@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Purchase Detail</h2>
+  <p><strong>Customer:</strong> {{ purchase.customer.name }}</p>
+  <p><strong>Inventory Item:</strong> {{ purchase.inventory_item.name }}</p>
+  <p><strong>Quantity:</strong> {{ purchase.quantity }}</p>
+  <p><strong>Total Price:</strong> {{ purchase.total_price }}</p>
+  <p><strong>Purchase Date:</strong> {{ purchase.purchase_date }}</p>
+  <p><strong>Payment Status:</strong> {{ purchase.payment_status }}</p>
+  <a href="{% url 'purchase_update' purchase.pk %}" class="btn btn-warning">Edit</a>
+  <a href="{% url 'purchase_list' %}" class="btn btn-secondary">Back to List</a>
+</div>
+{% endblock %}
