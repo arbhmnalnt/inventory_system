@@ -9,6 +9,8 @@ from financial.models import ExpenseRevenue
 from datetime import date
 from django.forms import modelformset_factory
 from django.http import JsonResponse
+from django.db.models import Q
+
 
 
 # ---------------------
@@ -71,7 +73,7 @@ def purchase_create(request):
                     date=date.today(),
                     purchase=purchase
                 )
-                messages.success(request, "Purchase completed.")
+                messages.success(request, "عملية شراء مكتملة .")
                 return redirect('purchase_list')
     else:
         form = PurchaseForm()
@@ -138,7 +140,7 @@ def purchase_update(request, pk):
                         purchase=purchase
                     )
 
-                messages.success(request, "Purchase updated successfully.")
+                messages.success(request, "تم تسجيل عملية بيع جديدة بنجاح.")
                 return redirect('purchase_list')
     else:
         form = PurchaseForm(instance=purchase)
@@ -176,7 +178,7 @@ def purchase_delete(request, pk):
             # Delete the purchase and its items (via cascade)
             purchase.delete()
 
-            messages.success(request, "Purchase deleted, inventory restored, and financial record removed.")
+            messages.success(request, "تم حذف عملية الشراء والإضافة للمخزون وحذف سجل الدفع المرتبط.")
             return redirect('purchase_list')
 
     return render(request, 'customers/purchase_confirm_delete.html', {'purchase': purchase})
@@ -186,7 +188,14 @@ def purchase_delete(request, pk):
 # (These are provided for context if you need them.)
 @login_required
 def customer_list(request):
+    query = request.GET.get('q')
     customers = Customer.objects.all()
+    if query:
+        customers = customers.filter(
+            Q(name__icontains=query) |
+            Q(email__icontains=query) |
+            Q(phone__icontains=query)
+        )
     return render(request, 'customers/customer_list.html', {'customers': customers})
 
 @login_required

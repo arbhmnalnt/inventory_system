@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-  <h3>Confirm Delete Purchase #{{ purchase.id }}</h3>
-  <p>Customer: {{ purchase.customer.name }}</p>
-  <p>Total: {{ purchase.total_price }}</p>
+  <h3>تأكيد حذف  عملية الشراء رقم #{{ purchase.id }}</h3>
+  <p>العميل : {{ purchase.customer.name }}</p>
+  <p>الإجمالى: {{ purchase.total_price }}</p>
 
   <form method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Yes, Delete</button>
-    <a href="{% url 'purchase_list' %}" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-danger">تأكيد الحذف</button>
+    <a href="{% url 'purchase_list' %}" class="btn btn-secondary">الغاء</a>
   </form>
 </div>
 {% endblock %}

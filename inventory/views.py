@@ -28,7 +28,7 @@ def inventory_item_create(request):
         form = InventoryItemForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Item added successfully.')
+            messages.success(request, 'تمت إضافة منتج جديد')
             return redirect('inventory_item_list')
     else:
         form = InventoryItemForm()
@@ -40,7 +40,7 @@ def inventory_item_update(request, pk):
         form = InventoryItemForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Item updated successfully.')
+            messages.success(request, 'تم التعديل بنجاح')
             return redirect('inventory_item_list')
     else:
         form = InventoryItemForm(instance=item)

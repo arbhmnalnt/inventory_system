@@ -68,6 +68,15 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Add this STATIC_ROOT setting:
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# setting arabic
+LANGUAGE_CODE = 'ar'
+TIME_ZONE = 'Africa/Cairo'
+
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
 # Redirect URLs for authentication
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/inventory/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+

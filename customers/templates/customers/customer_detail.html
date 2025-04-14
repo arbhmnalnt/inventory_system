@@ -1,38 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-  <h2>Customer: {{ customer.name }}</h2>
-  <p><strong>Email:</strong> {{ customer.email }}</p>
-  <p><strong>Phone:</strong> {{ customer.phone }}</p>
-  <p><strong>Address:</strong> {{ customer.address }}</p>
-
-  <h3 class="mt-4">Purchase History</h3>
+  <h2>العميل : {{ customer.name }}</h2>
+  <p><strong>الإيميل:</strong> {{ customer.email }}</p>
+  <p><strong>رقم التليفون:</strong> {{ customer.phone }}</p>
+  <p><strong>العنوان:</strong> {{ customer.address }}</p>
+  <hr>
+  <h3 class="mt-4">سجل الدفع الشخصى للعميل</h3>
   <table class="table table-bordered">
-    <thead>
+    <thead class="table-dark">
       <tr>
-        <th>Item</th>
-        <th>Quantity</th>
-        <th>Total Price</th>
-        <th>Purchase Date</th>
-        <th>Payment Status</th>
+        <th>المنتج</th>
+        <th>الكمية</th>
+        <th>الإجمالى</th>
+        <th>تاريخ الدفع</th>
+        <th>حالة الدفع</th>
       </tr>
     </thead>
     <tbody>
       {% for pur in purchases %}
-      <tr>
-        <td>{{ pur.inventory_item }}</td>
-        <td>{{ pur.quantity }}</td>
-        <td>{{ pur.total_price }}</td>
-        <td>{{ pur.purchase_date }}</td>
-        <td>{{ pur.payment_status }}</td>
-      </tr>
+        {% for item in pur.items.all %}
+        <tr>
+          <td>{{ item.inventory_item.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.total_price }}</td>
+          <td>{{ pur.purchase_date }}</td>
+          <td>تم الدفع</td>  {# Or add payment_status logic here if needed #}
+        </tr>
+        {% endfor %}
       {% empty %}
       <tr>
-        <td colspan="5">No purchases recorded.</td>
+        <td colspan="5">لا يوجد عمليات شراء لهذا العميل.</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  <a href="{% url 'customer_list' %}" class="btn btn-secondary">Back to List</a>
+  <a href="{% url 'customer_list' %}" class="btn btn-secondary">عودة لى قائمة العملاء</a>
 </div>
 {% endblock %}

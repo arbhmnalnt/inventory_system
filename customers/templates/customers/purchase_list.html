@@ -1,33 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-  <h2>Purchase List</h2>
-  <a href="{% url 'purchase_create' %}" class="btn btn-primary mb-2">Add New Purchase</a>
-  <table class="table table-bordered">
+  <h2>سجل المبيعات</h2>
+  <a href="{% url 'purchase_create' %}" class="btn btn-primary mb-2">إضافة سجل بيع جديد</a>
+  <table class="table table-bordered text-center">
     <thead>
       <tr>
-        <th>Customer</th>
-        <th>Inventory Item</th>
-        <th>Quantity</th>
-        <th>Total Price</th>
-        <th>Purchase Date</th>
-        <th>Payment Status</th>
-        <th>Actions</th>
+        <th>العميل</th>
+        <th>المنتجات</th>
+        <th>الكمية</th>
+        <th>التفاصيل</th>
+        <th>الإجمالى</th>
+        <th>تاريخ الشراء</th>
+        <th>الإجراءات</th>
       </tr>
     </thead>
     <tbody>
       {% for purchase in purchases %}
       <tr>
         <td>{{ purchase.customer.name }}</td>
-        <td>{{ purchase.inventory_item.name }}</td>
-        <td>{{ purchase.quantity }}</td>
+        <td>
+          <ul class="list-unstyled mb-0">
+            {% for item in purchase.items.all %}
+              <li>{{ item.inventory_item.name }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>
+          <ul class="list-unstyled mb-0">
+            {% for item in purchase.items.all %}
+              <li>{{ item.quantity }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>
+          {% for item in purchase.items.all %}
+            <li>عدد الوحدات {{ item.quantity }}</li>
+            <li>سعر الوحدة {{ item.unit_price  }}</li>
+          {% endfor %}
+          
+        </td>
         <td>{{ purchase.total_price }}</td>
         <td>{{ purchase.purchase_date }}</td>
-        <td>{{ purchase.payment_status }}</td>
         <td>
-          <a href="{% url 'purchase_detail' purchase.pk %}" class="btn btn-sm btn-info">View</a>
-          <a href="{% url 'purchase_update' purchase.pk %}" class="btn btn-sm btn-warning">Edit</a>
-          <a href="{% url 'purchase_delete' purchase.pk %}" class="btn btn-sm btn-danger">Delete</a>
+          <a href="{% url 'purchase_detail' purchase.pk %}" class="btn btn-sm btn-info">عرض التفاصيل</a>
+          <a href="{% url 'purchase_update' purchase.pk %}" class="btn btn-sm btn-warning text-white">تعديل</a>
+          <a href="{% url 'purchase_delete' purchase.pk %}" class="btn btn-sm btn-danger">حذف</a>
         </td>
       </tr>
       {% endfor %}

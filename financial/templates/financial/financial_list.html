@@ -1,45 +1,55 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-  <h2>Financial Records</h2>
-  <a href="{% url 'financial_create' %}" class="btn btn-primary mb-3">+ Add Record</a>
+  <h2>السجلات المالية</h2>
+  <form method="get" class="form-inline mb-4">
+    <label for="start_date" class="mr-2">من تاريخ:</label>
+    <input type="date" name="start_date" id="start_date" value="{{ start_date }}" class="form-control mr-3">
+  
+    <label for="end_date" class="mr-2">إلى تاريخ:</label>
+    <input type="date" name="end_date" id="end_date" value="{{ end_date }}" class="form-control mr-3">
+  
+    <button type="submit" class="btn btn-primary mr-3">عرض النتائج</button>
+    <a href="{% url 'financial_list' %}" class="btn btn-secondary ml-2 mr-3">إلغاء التصفية</a>
+  </form>
+  <a href="{% url 'financial_create' %}" class="btn btn-primary mb-3 mr-3">+ إضافة سجل جديد</a>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Type</th>
-        <th>Amount</th>
-        <th>Date</th>
-        <th>Description</th>
-        <th>Linked Purchase</th>
-        <th>Actions</th>
+        <th>النوع</th>
+        <th>المبلغ</th>
+        <th>التاريخ</th>
+        <th>التفاصيل / الوصف</th>
+        <th>رقم الفاتورة - عملية الشراء</th>
+        <th>الإجراءات</th>
       </tr>
     </thead>
     <tbody>
       {% for record in records %}
       <tr>
-        <td>{{ record.record_type }}</td>
+        <td>{{ record.get_record_type_display  }}</td>
         <td>{{ record.amount }}</td>
         <td>{{ record.date }}</td>
         <td>{{ record.description|truncatechars:40 }}</td>
         <td>{% if record.purchase %}#{{ record.purchase.id }}{% else %}-{% endif %}</td>
         <td>
           {% if not record.purchase %}
-            <a href="{% url 'financial_update' record.pk %}" class="btn btn-sm btn-warning">Edit</a>
-            <a href="{% url 'financial_delete' record.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            <a href="{% url 'financial_update' record.pk %}" class="btn btn-sm btn-warning">تعديل</a>
+            <a href="{% url 'financial_delete' record.pk %}" class="btn btn-sm btn-danger">حذف</a>
           {% else %}
-            <span class="badge badge-info">Auto-Linked</span>
+            <span class="badge badge-info">سجل مرتبط بملية شراء</span>
           {% endif %}
         </td>
       </tr>
       {% empty %}
-      <tr><td colspan="6">No financial records found.</td></tr>
+      <tr><td colspan="6">لا توجد سجلات مالية حاليا</td></tr>
       {% endfor %}
     </tbody>
   </table>
   <div class="mt-4">
-    <h5>Total Revenue: {{ total_revenue }}</h5>
-    <h5>Total Expense: {{ total_expense }}</h5>
-    <h4><strong>Balance: {{ balance }}</strong></h4>
+    <h5>إجمالى الإيرادات: {{ total_revenue }}</h5>
+    <h5>إجمالى المصروفات: {{ total_expense }}</h5>
+    <h4><strong>الرصيد الحالى: {{ balance }}</strong></h4>
   </div>
 </div>
 {% endblock %}

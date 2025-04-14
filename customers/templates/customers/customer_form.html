@@ -1,26 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-  <h2>{% if customer %}Edit{% else %}Add{% endif %} Customer</h2>
+  <h2>{% if customer %}تعديل {% else %}اضافة {% endif %} بيانات عميل</h2>
   <form method="post">
     {% csrf_token %}
     <div class="form-group">
-      <label>Name</label>
+      <label>الإسم</label>
       <input type="text" name="name" class="form-control" value="{{ customer.name|default:'' }}">
     </div>
     <div class="form-group">
-      <label>Email</label>
+      <label>الإيميل</label>
       <input type="email" name="email" class="form-control" value="{{ customer.email|default:'' }}">
     </div>
     <div class="form-group">
-      <label>Phone</label>
+      <label>رقم التليفون</label>
       <input type="text" name="phone" class="form-control" value="{{ customer.phone|default:'' }}">
     </div>
     <div class="form-group">
-      <label>Address</label>
+      <label>العنوان</label>
       <textarea name="address" class="form-control">{{ customer.address|default:'' }}</textarea>
     </div>
-    <button type="submit" class="btn btn-success">Save</button>
+    <button type="submit" class="btn btn-success">تأكيد وحفظ</button>
   </form>
 </div>
 {% endblock %}

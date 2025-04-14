@@ -1,15 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-  <h2>Customers</h2>
-  <a href="{% url 'customer_create' %}" class="btn btn-primary mb-2">Add New Customer</a>
+  <form method="get" class="form-inline mb-3">
+    <input type="text" name="q" value="{{ query }}" class="form-control mr-2" placeholder="بحث عن عميل ">
+    <button type="submit" class="btn btn-primary mr-3">بحث</button>
+    <a href="{% url 'customer_list' %}" class="btn btn-secondary ml-2 mr-3">إلغاء</a>
+  </form>
+  <h2>العملاء</h2>
+  <a href="{% url 'customer_create' %}" class="btn btn-primary mb-2">إضافة عميل جديد</a>
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Actions</th>
+        <th>الإسم</th>
+        <th>الايميل</th>
+        <th>رقم التليفون</th>
+        <th>الإجراءات</th>
       </tr>
     </thead>
     <tbody>
@@ -19,9 +24,9 @@
         <td>{{ customer.email }}</td>
         <td>{{ customer.phone }}</td>
         <td>
-          <a href="{% url 'customer_detail' customer.pk %}" class="btn btn-sm btn-info">Details</a>
-          <a href="{% url 'customer_update' customer.pk %}" class="btn btn-sm btn-warning">Edit</a>
-          <a href="{% url 'customer_delete' customer.pk %}" class="btn btn-sm btn-danger">Delete</a>
+          <a href="{% url 'customer_detail' customer.pk %}" class="btn btn-sm btn-info">التفاصيل - صفحة العميل</a>
+          <a href="{% url 'customer_update' customer.pk %}" class="btn btn-sm btn-warning">تعديل البيانات</a>
+          <a href="{% url 'customer_delete' customer.pk %}" class="btn btn-sm btn-danger">حذف سجل العميل</a>
         </td>
       </tr>
       {% endfor %}

@@ -4,19 +4,19 @@
 <div class="container mt-4">
   <form method="get" class="form-inline mb-3">
     <input type="text" name="q" value="{{ query }}" class="form-control mr-2" placeholder="Search name or category">
-    <button type="submit" class="btn btn-primary">Search</button>
-    <a href="{% url 'inventory_item_list' %}" class="btn btn-secondary ml-2">Clear</a>
+    <button type="submit" class="btn btn-primary mr-3">بحث</button>
+    <a href="{% url 'inventory_item_list' %}" class="btn btn-secondary ml-2 mr-3">حذف</a>
   </form>
-  <h2>Inventory Items</h2>
-  <a href="{% url 'inventory_item_create' %}" class="btn btn-primary mb-2">Add New Item</a>
+  <h2>سجل المخزن</h2>
+  <a href="{% url 'inventory_item_create' %}" class="btn btn-primary mb-2">اضافة منتج جديد</a>
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Quantity</th>
-        <th>Description</th>
-        <th>Actions</th>
+        <th>الإسم</th>
+        <th>التصنيف</th>
+        <th>الكمية</th>
+        <th>التفاصيل - الوصف</th>
+        <th>الإجراءات</th>
       </tr>
     </thead>
     <tbody>
@@ -27,8 +27,8 @@
         <td>{{ item.quantity }}</td>
         <td>{{ item.description }}</td>
         <td>
-          <a href="{% url 'inventory_item_update' item.pk %}" class="btn btn-sm btn-warning">Edit</a>
-          <a href="{% url 'inventory_item_delete' item.pk %}" class="btn btn-sm btn-danger">Delete</a>
+          <a href="{% url 'inventory_item_update' item.pk %}" class="btn btn-sm btn-warning">تعديل</a>
+          <a href="{% url 'inventory_item_delete' item.pk %}" class="btn btn-sm btn-danger">حذف</a>
         </td>
       </tr>
       {% endfor %}

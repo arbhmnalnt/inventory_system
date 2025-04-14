@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card border-danger shadow-sm">
+        <div class="card-header bg-danger text-white text-center">
+          <h4>تأكيد حذف العميل</h4>
+        </div>
+        <div class="card-body text-center">
+          <p class="lead">
+            هل أنت متأكد أنك تريد حذف العميل التالي؟
+          </p>
+          <h5 class="text-danger">الاسم: {{ customer.name }}</h5>
+          <p><strong>الإيميل:</strong> {{ customer.email }}</p>
+          <p><strong>رقم الهاتف:</strong> {{ customer.phone }}</p>
+          <p><strong>العنوان:</strong> {{ customer.address }}</p>
+
+          <form method="post" class="mt-4">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">نعم، احذف العميل</button>
+            <a href="{% url 'customer_list' %}" class="btn btn-secondary">إلغاء</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
