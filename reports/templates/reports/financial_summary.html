@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Financial Summary</h2>
-<table class="table">
+<h2>التقرير المالى</h2>
+<table class="table text-center">
   <thead>
     <tr>
-      <th>Type</th>
-      <th>Amount</th>
-      <th>Date</th>
-      <th>Description</th>
+      <th>النوع</th>
+      <th>الكمية</th>
+      <th>التاريخ</th>
+      <th>الوصف / التفاصيل</th>
     </tr>
   </thead>
   <tbody>
@@ -21,7 +21,5 @@
     {% endfor %}
   </tbody>
 </table>
-<h4 class="mt-4">Total Revenue: {{ total_revenue }}</h4>
-<h4>Total Expense: {{ total_expense }}</h4>
-<h3><strong>Balance: {{ balance }}</strong></h3>
+<h4 class="mt-4">إجمالى الوارد : {{ total_revenue }} | إجمالى الصادر : {{ total_expense }} -||-||- <strong>الحالى: {{ balance }}</strong></h4>
 {% endblock %}
